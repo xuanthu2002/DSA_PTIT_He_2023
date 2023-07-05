@@ -1,22 +1,23 @@
 #include <iostream>
-#include <cstring>
+#include <algorithm>
 
 using namespace std;
 
 int a[100];
 int n;
 bool used[100];
+int hv[100];
 
 void quayLui(int i) {
-	for(int j = n; j >= 1; j--) {
+	for(int j = 0; j < n; j++) {
 		if(!used[j]) {
-			a[i] = j;
+			hv[i] = j;
 			used[j] = true;
 			if(i == n - 1) {
 				for(int idx = 0; idx < n; idx++) {
-					cout << a[idx];
+					cout << a[hv[idx]] << " ";
 				}
-				cout << " ";
+				cout << endl;
 			}
 			else quayLui(i + 1);
 			used[j] = false;
@@ -25,14 +26,13 @@ void quayLui(int i) {
 }
 
 int main() {
-	int t;
-	cin >> t;
-	while(t--) {
-		cin >> n;
-		memset(used, false, sizeof(used));
-		quayLui(0);
-		cout << endl;
+	cin >> n;
+	for(int i = 0; i < n; i++) {
+		cin >> a[i];
+		used[i] = false;
 	}
+	sort(a, a + n);
+	quayLui(0);
 	return 0;
 }
 
