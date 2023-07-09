@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -8,8 +9,7 @@ int main() {
 	while(t--) {
 		int n, k;
 		cin >> n >> k;
-		int a[k + 1];
-		a[k] = n;
+		int a[k];
 		for(int i = 0; i < k; i++) {
 			cin >> a[i];
 		}
@@ -17,8 +17,17 @@ int main() {
 		while(i >= 0 && a[i] == n - k + i + 1) {
 			i -= 1;
 		}
-		if(i < 0) cout << k << endl;
-		else cout << a[i + 1] - a[i] << endl;
+		int s = a[i] + 1;
+		int res = 0;
+		for(int j = 0; j < k - i; j++) {
+			if(!binary_search(a + i, a + k, s + j)) {
+				res += 1;
+			}
+		}
+		if(i < 0) {
+			res = k;
+		}
+		cout << res << endl;
 	}
 	return 0;
 }
