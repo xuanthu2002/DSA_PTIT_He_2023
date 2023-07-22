@@ -3,23 +3,23 @@
 
 using namespace std;
 
-int a[15];
-bool cot[15];
-bool xuoi[100];
-bool nguoc[100];
-int cnt = 0;
 int n;
+bool cot[11], xuoi[20], nguoc[20];
+int kq;
 
 void quayLui(int i) {
-	for(int j = 1; j <= n; j++) {
-		if(!cot[j] && !xuoi[i - j + n - 1] && !nguoc[i + j - 2]) {
-			a[i] = j;
-			cot[j] = xuoi[i - j + n - 1] = nguoc[i + j - 2] = true;
+	for(int j = 0; j < n; j++) {
+		if(!cot[j] && !xuoi[i + n - j] && !nguoc[i + j]) {
+			cot[j] = true;
+			xuoi[i + n - j] = true;
+			nguoc[i + j] = true;
 			if(i == n - 1) {
-				cnt ++;
+				kq += 1;
 			}
 			else quayLui(i + 1);
-			cot[j] = xuoi[i - j + n - 1] = nguoc[i + j - 2] = false;
+			cot[j] = false;
+			xuoi[i + n - j] = false;
+			nguoc[i + j] = false;
 		}
 	}
 }
@@ -32,11 +32,10 @@ int main() {
 		memset(cot, false, sizeof(cot));
 		memset(xuoi, false, sizeof(xuoi));
 		memset(nguoc, false, sizeof(nguoc));
-		cnt = 0;
+		kq = 0;
 		quayLui(0);
-		cout << cnt << endl;	
+		cout << kq << endl;
 	}
 	return 0;
 }
-
 
