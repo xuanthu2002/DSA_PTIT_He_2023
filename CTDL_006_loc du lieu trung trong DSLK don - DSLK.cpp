@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -9,11 +10,6 @@ struct Node {
 	Node(int value) {
 		this->value = value;
 		this->next = NULL;
-	}
-	
-	Node(int value, Node* next) {
-		this->value = value;
-		this->next = next;
 	}
 };
 
@@ -31,16 +27,22 @@ void insert(node &root, int value) {
 	p->next = new Node(value);
 }
 
-void remove(node &root, int value) {
+void unique(node &root) {
 	node p = root;
 	while(p->next != NULL) {
-		if(p->next->value == value) {
+		node q = root;
+		int cnt = 0;
+		while(q != p->next) {
+			if(q->value == p->next->value) {
+				cnt += 1;
+				break;
+			}
+			q = q->next;
+		}
+		if(cnt > 0) {
 			p->next = p->next->next;
 		}
 		else p = p->next;
-	}
-	if(root->value == value) {
-		root = root->next;
 	}	
 }
 
@@ -57,12 +59,15 @@ int main() {
 	int n;
 	cin >> n;
 	int x;
+	map<int, bool> m;
 	for(int i = 0; i < n; i++) {
 		cin >> x;
+//		if(m[x] == false) {
 		insert(root, x);
+//		}
+//		m[x] = true;
 	}
-	cin >> x;
-	remove(root, x);
+	unique(root);
 	show(root);
 	return 0;
 }
