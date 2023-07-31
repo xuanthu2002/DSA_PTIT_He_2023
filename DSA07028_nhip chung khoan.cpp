@@ -8,14 +8,14 @@ void solve(int a[], int n) {
 	stack<int> st;
 	for(int i = 0; i < n; i++) {
 		if(st.empty()) {
-			kq[i] = 1;
+			kq[i] = i + 1;
 		}
 		else {
 			while(!st.empty() && a[i] >= a[st.top()]) {
 				st.pop();
 			}
 			if(!st.empty()) kq[i] = i - st.top();
-			else kq[i] = 1;
+			else kq[i] = i + 1;
 		}
 		st.push(i);
 	}
